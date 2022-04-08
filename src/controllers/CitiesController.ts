@@ -1,7 +1,10 @@
 import { Request, Response} from 'express';
 import fs from 'fs';
 import path from 'path';
-
+interface city {
+     id: number;
+     nome: string
+}
 class CitiesController {
      index(req: Request ,res: Response){
           const { uf } = req.params;
@@ -26,14 +29,14 @@ class CitiesController {
           try {
           const dirFiles = fs.readdirSync(path.resolve(__dirname,'..','data','cities'));
 
-          const allCities = [];
+          const allCities: city[] = [];
 
           dirFiles.map(item => {
                const data =  fs.readFileSync(path.resolve(__dirname,'..','data','cities',item),'utf-8');
 
-               allCities.push(...data);
+               allCities.push(...JSON.parse(data));
           })
-          const filteredData = allCities.filter(item => item.name.includes(city));
+          const filteredData = allCities.filter(item => item.nome.toLowerCase().includes(city.toLowerCase()));
 
           return res.status(200).json(filteredData);
           } catch (error) {
