@@ -12,10 +12,10 @@ routes.get('/', (req,res)=> {
 })
 
 routes.get('/cidades/:uf', CitiesController.index );
+routes.post("/cidades/search",CitiesController.search);
 
 routes.get('/estados', UfsController.index);
 routes.get('/estados/regioes/:id', UfsController.list);
-
 
 routes.get('/regioes', StatesController.index );
 
